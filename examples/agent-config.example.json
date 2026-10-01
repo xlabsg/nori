@@ -1,0 +1,13 @@
+{
+  "mcp": {
+    "local": [
+      {
+        "name": "demo",
+        "command": "/absolute/path/to/node",
+        "args": ["/absolute/path/to/finance-agent/examples/mcp/snapshot-server.mjs"],
+        "env_names": [],
+        "allowed_tools": ["get_demo_snapshot"]
+      }
+    ]
+  }
+}

@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Nori · 对话工作区</title>
+    <link rel="stylesheet" href="/assets/workspace.css" />
+  </head>
+  <body>
+    <div class="workspace">
+      <aside class="sidebar">
+        <a class="brand" href="/" aria-label="Nori 首页"
+          ><span class="brand-mark">n<span>·</span></span> Nori</a
+        >
+        <button class="new-conversation" id="new-chat" type="button">
+          <span>＋</span> 新对话 <kbd>New</kbd>
+        </button>
+        <div class="section-label">工作区</div>
+        <nav class="workspace-nav">
+          <button class="selected" type="button" data-focus-chat>
+            ◌ <span>对话</span>
+          </button>
+          <button type="button" data-dialog="resources-dialog">
+            ☷ <span>任务与提醒</span
+            ><span id="unread" class="nav-count">—</span>
+          </button>
+          <button type="button" data-dialog="connections-dialog">↔ <span>连接</span></button>
+        </nav>
+        <div class="history-heading">
+          <span class="section-label">最近对话</span><span>↺</span>
+        </div>
+        <select id="conversation-select" aria-label="历史对话" hidden>
+          <option value="">开始新的对话</option>
+        </select>
+        <div id="conversation-list" class="conversation-list">
+          <p>连接工作区后显示对话</p>
+        </div>
+        <div class="sidebar-bottom">
+          <div class="local-badge">
+            <span class="status-dot"></span
+            ><span id="session-label">本地工作区 · 未连接</span>
+          </div>
+
+        </div>
+      </aside>
+      <main class="chat-workspace" id="chat">
+        <header class="chat-header">
+          <div>
+            <span class="header-title" id="conversation-title">Nori</span
+            ><span class="header-label">Assistant</span>
+          </div>
+          <div class="mobile-workspace-actions">
+
+            <button
+              type="button"
+              class="icon-button"
+              data-dialog="resources-dialog"
+              aria-label="任务与提醒"
+            >
+              ☷
+            </button>
+          </div>
+          <button
+            class="environment-toggle"
+            id="toggle-environment"
+            type="button"
+            aria-expanded="true"
+          >
+            ◫ <span>执行环境</span>
+          </button>
+        </header>
+        <div
+          id="message"
+          class="workspace-message"
+          role="status"
+          aria-live="polite"
+        ></div>
+        <div class="chat-scroll" id="chat-scroll">
+          <div id="chat-messages" aria-live="polite">
+            <div class="chat-welcome">
+              <div class="welcome-symbol" aria-hidden="true">✳</div>
+              <div class="eyebrow">YOUR ONGOING WORK</div>
+              <h1>交代工作，让 Nori 持续跟进</h1>
+              <p>连接自己的工具，把邮件、日程与持续跟进的工作交给 Nori。</p>
+              <div class="suggestions">
+                <button
+                  type="button"
+                  data-prompt="读取我已连接的邮件和主日历，汇总未读邮件与今天的日程。如果未连接，请告诉我如何连接。"
+                >
+                  <span>↗</span><strong>汇总邮件与日程</strong
+                  ><small>从连接的数据源了解今天</small>
+                </button>
+                <button
+                  type="button"
+                  data-prompt="查看我最近的后台任务，总结已经完成和还在等待的工作。"
+                >
+                  <span>☷</span><strong>继续最近的工作</strong
+                  ><small>任务结果与后续问题</small>
+                </button>
+              </div>
+              <div class="welcome-note">
+                <span></span>连接数据源，使用已授权的工具
+              </div>
+            </div>
+          </div>
+          <div id="chat-linked-tasks"></div>
+          <div id="chat-agent-tasks"></div>
+        </div>
+        <div class="composer-area">
+          <form id="chat-form" class="composer">
+            <label for="chat-input" class="sr-only">你的目标</label>
+            <textarea
+              id="chat-input"
+              rows="3"
+              maxlength="20000"
+              placeholder="交代一项工作，或让 Nori 继续跟进…"
+              required
+            ></textarea>
+            <div class="composer-controls">
+              <div class="composer-tools">
+                <button
+                  type="button"
+                  class="icon-button"
+                  data-dialog="data-dialog"
+                  aria-label="导入数据"
+                >
+                  ＋
+                </button>
+
+              </div>
+              <div class="send-controls">
+                <button
+                  type="button"
+                  id="chat-stop"
+                  disabled
+                  class="stop-button"
+                >
+                  停止</button
+                ><button class="send-button" id="chat-send" aria-label="发送">
+                  ↑
+                </button>
+              </div>
+            </div>
+          </form>
+          <div class="composer-footer">
+            <span id="chat-status">连接工作区后开始对话</span
+            ><span>数据有来源，结果可复核</span>
+          </div>
+        </div>
+      </main>
+      <aside class="environment-panel" id="environment-panel">
+        <header class="environment-header">
+          <div>
+            <span class="environment-icon">◫</span
+            ><strong>Linux 执行环境</strong>
+          </div>
+          <button
+            type="button"
+            class="icon-button"
+            id="close-environment"
+            aria-label="收起执行环境"
+          >
+            ×
+          </button>
+        </header>
+        <div class="environment-summary">
+          <div class="environment-name">
+            <span class="linux-mark">L</span>
+            <div>
+              <strong id="environment-name">Debian 12 · XFCE</strong
+              ><small>平台默认镜像</small>
+            </div>
+            <span class="offline-pill" id="environment-connection">未连接</span>
+          </div>
+          <div class="resource-spec">
+            <span id="resource-cpu">2 vCPU</span
+            ><span id="resource-memory">4 GB 内存</span><span>服务端管理</span>
+          </div>
+        </div>
+        <div class="desktop-controls">
+          <span>Linux 桌面 · Chromium</span>
+          <button type="button" id="expand-desktop">展开桌面 ↗</button>
+        </div>
+        <div class="environment-view desktop-live" id="env-desktop">
+          <div class="environment-empty" id="desktop-placeholder">
+            <h2>助手的 Linux 桌面</h2>
+            <p>
+              点击启动桌面，或让助手操作桌面时按需启动。你和助手可以在同一画面中操作浏览器与桌面应用。
+            </p>
+          </div>
+          <iframe
+            id="desktop-frame"
+            title="真实 Linux 远程桌面"
+            hidden
+            allow="fullscreen"
+            referrerpolicy="same-origin"
+          ></iframe>
+          <button type="button" id="desktop-reconnect">启动桌面</button>
+        </div>
+        <div class="environment-bottom">
+          <div class="environment-detail">
+            <span>环境管理</span><strong>平台自动分配</strong>
+          </div>
+          <div class="environment-detail">
+            <span>环境状态</span
+            ><strong id="container-status">桌面待连接</strong>
+          </div>
+          <p>
+            按对话按需启动默认容器。工作文件保留在容器运行期间；环境停止后临时文件清空。
+          </p>
+        </div>
+      </aside>
+    </div>
+    <dialog id="data-dialog">
+      <header class="dialog-heading">
+        <div>
+          <span class="eyebrow">DATA</span>
+          <h2>导入与分析</h2>
+        </div>
+        <button
+          class="icon-button"
+          type="button"
+          data-close-dialog
+          aria-label="关闭"
+        >
+          ×
+        </button>
+      </header>
+      <section class="panel" id="create">
+        <h2>创建分析任务</h2>
+        <p class="sub">
+          现金流调整收益与现货资产占比。每次分析固定导入快照，不代表实时行情。
+        </p>
+        <form id="analysis">
+          <label for="name">任务名称</label
+          ><input id="name" value="Crypto 资产复盘" maxlength="120" required />
+          <label for="data">分析数据 JSON</label
+          ><textarea id="data" spellcheck="false" required></textarea>
+          <label for="csv">或导入资产 CSV · asset_id,quantity,price</label
+          ><input id="csv" type="file" accept=".csv,text/csv" />
+          <div class="row">
+            <input class="check" type="checkbox" id="repeat" /><label
+              for="repeat"
+              style="margin: 0"
+              >同时创建周期任务</label
+            ><input
+              id="interval"
+              type="number"
+              min="60"
+              max="2592000"
+              value="3600"
+              aria-label="检查间隔秒"
+              style="width: 110px"
+            /><span class="sub" style="margin: 0">秒</span>
+          </div>
+          <p class="sub" style="margin: 12px 0">
+            周期任务会重复分析当前快照，不会自动更新市场数据。
+          </p>
+          <button class="primary" id="submit">提交后台分析</button>
+        </form>
+      </section>
+    </dialog>
+    <dialog id="resources-dialog">
+      <header class="dialog-heading">
+        <div>
+          <span class="eyebrow">ACTIVITY</span>
+          <h2>任务与提醒</h2>
+        </div>
+        <button
+          class="icon-button"
+          type="button"
+          data-close-dialog
+          aria-label="关闭"
+        >
+          ×
+        </button>
+      </header>
+      <div class="stats">
+        <div class="stat">
+          <span>任务记录 · 最近 100 条</span><strong id="count">—</strong>
+        </div>
+        <div class="stat">
+          <span>待执行 / 执行中</span><strong id="active">—</strong>
+        </div>
+        <div class="stat">
+          <span>未读提醒 · 最近 100 条</span
+          ><strong id="unread-detail">—</strong>
+        </div>
+      </div>
+      <div class="columns">
+        <div>
+          <section class="panel" id="inbox">
+            <h2>提醒收件箱</h2>
+            <div id="notifications" class="empty">
+              连接后查看任务完成与异常提醒。
+            </div>
+          </section>
+          <section class="panel">
+            <h2>后台任务</h2>
+        <p id="assistant-services" class="sub">正在检查后台状态…</p>
+            <div id="agent-task-list">尚未加载。</div>
+          </section>
+          <section class="panel" id="monitors">
+            <h2>周期任务</h2>
+            <div id="monitor-list" class="empty">尚未加载。</div>
+          </section>
+        </div>
+      </div>
+      <section class="panel" id="tasks">
+        <h2>任务与结果</h2>
+        <p class="sub">结果、事件顺序与取消状态均持久保存。</p>
+        <div id="task-list" class="empty">提交第一个分析任务。</div>
+      </section>
+    </dialog>
+    <dialog id="connections-dialog">
+      <header class="dialog-heading"><h2>连接账号</h2>
+        <button class="icon-button" type="button" data-close-dialog aria-label="关闭">×</button>
+      </header>
+      <section class="panel"><h3>Google · 邮件与日历</h3>
+        <p id="google-setup-status">正在读取连接状态…</p>
+        <button type="button" id="google-connect" class="primary">连接 Google</button>
+        <div id="connections-list"></div>
+      </section>
+      <section class="panel"><h3>Telegram · 主动提醒</h3>
+        <p id="telegram-status">正在读取通知配置…</p>
+        <details><summary>配置 Telegram</summary>
+          <form id="telegram-form" class="stack" autocomplete="off">
+            <label>Bot token<input id="telegram-token" type="password" required autocomplete="new-password" placeholder="仅保存在后端凭证库"></label>
+            <label>接收 chat ID<input id="telegram-chat-id" required inputmode="numeric" placeholder="数字 chat ID"></label>
+            <p class="sub">先在 Telegram 中向自己的 bot 发送 /start。仅发送任务提醒，不接收聊天指令。</p>
+            <button id="telegram-save" type="submit">连接 Telegram</button>
+          </form>
+        </details>
+        <button id="telegram-test" type="button" hidden>发送测试通知</button>
+        <button id="telegram-disconnect" type="button" hidden>断开 Telegram</button>
+      </section>
+      <section class="panel"><h3>提醒偏好</h3>
+        <details><summary>时区、免打扰与关注条件</summary>
+        <form id="assistant-preferences" class="stack">
+          <label>时区<input id="assistant-timezone" value="Asia/Shanghai" required></label>
+          <label><input id="assistant-quiet" type="checkbox"> 外部通知免打扰（站内提醒仍即时显示）</label>
+          <div class="grid-2"><label>开始<input id="assistant-quiet-start" type="time" value="22:00" required></label><label>结束<input id="assistant-quiet-end" type="time" value="08:00" required></label></div>
+          <label>重点联系人（每行一个）<textarea id="assistant-contacts" rows="2" maxlength="6000"></textarea></label>
+          <label>值得提醒的内容<textarea id="assistant-criteria" rows="2" maxlength="2000" placeholder="例如：账单到期、需要回复、日程冲突；忽略营销邮件"></textarea></label>
+          <button type="submit">保存偏好</button>
+        </form>
+        </details>
+      </section>
+    </dialog>
+    <script src="/assets/app.js"></script>
+    <script src="/assets/vendor/markdown-it.min.js"></script>
+    <script src="/assets/markdown.js"></script>
+    <script src="/assets/connectors.js"></script>
+    <script src="/assets/assistant.js"></script>
+    <script src="/assets/chat.js"></script>
+    <script src="/assets/workspace.js"></script>
+    <script src="/assets/desktop.js"></script>
+  </body>
+</html>

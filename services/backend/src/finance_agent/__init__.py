@@ -1,0 +1,1 @@
+"""Nori local assistant prototype."""

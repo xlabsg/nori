@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=文档编辑
+Icon=libreoffice-writer
+Exec=libreoffice --writer
+Terminal=false
+StartupNotify=true

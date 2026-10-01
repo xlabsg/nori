@@ -1,0 +1,6 @@
+{
+  "name": "finance-desktop-browser-tools",
+  "private": true,
+  "version": "0.1.0",
+  "dependencies": {"chrome-devtools-mcp": "1.10.1"}
+}

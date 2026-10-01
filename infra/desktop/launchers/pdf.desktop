@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=PDF 阅读器
+Icon=application-pdf
+Exec=evince
+Terminal=false
+StartupNotify=true

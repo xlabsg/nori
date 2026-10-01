@@ -1,0 +1,20 @@
+{
+  "tenants": {
+    "local": {
+      "binance": {
+        "credentials_env": {
+          "BINANCE_API_KEY": "LOCAL_BINANCE_API_KEY",
+          "BINANCE_SECRET_KEY": "LOCAL_BINANCE_SECRET_KEY"
+        }
+      },
+      "okx": {
+        "demo": true,
+        "credentials_env": {
+          "OKX_API_KEY": "LOCAL_OKX_API_KEY",
+          "OKX_SECRET_KEY": "LOCAL_OKX_SECRET_KEY",
+          "OKX_PASSPHRASE": "LOCAL_OKX_PASSPHRASE"
+        }
+      }
+    }
+  }
+}
