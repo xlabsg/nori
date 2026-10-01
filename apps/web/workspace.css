@@ -1099,3 +1099,18 @@ a:focus-visible {
 .agent-task-card button { margin: 8px 0; padding: 5px 12px; border: 1px solid var(--line); border-radius: 6px; }
 .agent-task-card summary { cursor: pointer; color: var(--muted); font-size: 12px; }
 #connections-list { margin-top: 18px; }
+
+.language-picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.language-picker select {
+  width: auto;
+  padding: 5px 8px;
+  font-size: 12px;
+}

@@ -48,7 +48,7 @@ test('first conversation creation and reconnect share one real connection reques
   finish({url:'/desktop/example/view'});
   await pending;
   assert.equal(calls, 1);
-  assert.equal($('desktop-frame').src, '/desktop/example/view');
+  assert.equal($('desktop-frame').src, '/desktop/example/view?lang=zh-CN');
   assert.equal($('desktop-frame').hidden, false);
   assert.equal($('desktop-reconnect').disabled, false);
   listeners.get('message')({origin:'http://localhost', source:$('desktop-frame').contentWindow, data:{type:'finance-desktop-connected'}});

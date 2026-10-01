@@ -106,6 +106,10 @@ def create_app(settings: Settings | None = None):
     def index():
         return FileResponse(settings.root / "apps/web/index.html")
 
+    @app.get("/assets/i18n.js", include_in_schema=False)
+    def language_javascript():
+        return FileResponse(settings.root / "apps/web/i18n.js", media_type="text/javascript")
+
     @app.get("/assets/app.js", include_in_schema=False)
     def javascript():
         return FileResponse(settings.root / "apps/web/app.js", media_type="text/javascript")

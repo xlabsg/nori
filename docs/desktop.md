@@ -2,6 +2,11 @@
 
 产品以聊天为主，右侧为真实 Linux 桌面，用户不配置镜像、CPU 或内存。当前平台默认镜像包含 Debian 12、XFCE、Chromium、Python 3、Xvfb、x11vnc 和 noVNC。用户与 Agent 共享同一个对话容器的画面和 `/workspace`。
 
+镜像默认使用英文 locale（`en_US.UTF-8`、`LANGUAGE=en_US:en`）。XFCE、Chromium 和
+桌面启动器默认显示英文，欢迎页也为英文；`Name[zh_CN]` 保留启动器的中文名称。
+界面语言在网页侧栏独立切换，不会重建已有桌面容器。旧容器保留旧镜像，新的英文环境
+需要重建镜像后在新对话中启动。
+
 ## 默认软件
 
 | 类别 | 预装工具 | 桌面入口 |

@@ -1,4 +1,5 @@
 (() => {
+  const t = window.noriI18n?.t || ((text) => text);
   let activeId = "",
     generation = 0,
     connecting;
@@ -6,7 +7,7 @@
     placeholder = $("desktop-placeholder");
   function state(text, connected = false) {
     $("container-status").textContent = text;
-    $("environment-connection").textContent = connected ? "已连接" : "未连接";
+    $("environment-connection").textContent = connected ? t("已连接") : t("未连接");
   }
   function clear() {
     ++generation;
@@ -15,11 +16,11 @@
     frame.removeAttribute("src");
     frame.hidden = true;
     placeholder.hidden = false;
-    state("等待连接工作区");
+    state(t("等待连接工作区"));
   }
   async function connect(force = false) {
     const id = $("conversation-select").value;
-    if (!id) throw new Error("请先选择或创建对话");
+    if (!id) throw new Error(t("请先选择或创建对话"));
     if (connecting && id === activeId) {
       await connecting;
       if (!force || id === activeId) return;
@@ -30,7 +31,7 @@
     frame.hidden = true;
     frame.removeAttribute("src");
     placeholder.hidden = false;
-    state(force ? "正在启动默认 Linux 桌面…" : "正在检查桌面状态…");
+    state(force ? t("正在启动默认 Linux 桌面…") : t("正在检查桌面状态…"));
     connecting = (async () => {
       try {
         const result = await api(
@@ -40,15 +41,15 @@
         if (version !== generation) return;
         if (result.connected === false) {
           activeId = "";
-          $("desktop-reconnect").textContent = "启动桌面";
-          state("桌面未启动 · 按需使用");
+          $("desktop-reconnect").textContent = t("启动桌面");
+          state(t("桌面未启动 · 按需使用"));
           return;
         }
-        $("desktop-reconnect").textContent = "重新连接桌面";
-        frame.src = result.url;
+        $("desktop-reconnect").textContent = t("重新连接桌面");
+        frame.src = result.url + "?lang=" + (window.noriI18n?.language || "zh-CN");
         frame.hidden = false;
         placeholder.hidden = true;
-        state("正在连接远程画面…");
+        state(t("正在连接远程画面…"));
       } catch (e) {
         if (version === generation) {
           state(e.message);
@@ -68,15 +69,15 @@
     )
       return;
     if (event.data?.type === "finance-desktop-connected")
-      state("Linux 桌面已连接", true);
+      state(t("Linux 桌面已连接"), true);
     if (event.data?.type === "finance-desktop-disconnected")
-      state("桌面连接已断开");
+      state(t("桌面连接已断开"));
   });
   window.addEventListener("finance-conversation", () => {
     if (!$("conversation-select").value) {
       clear();
-      state("桌面未启动 · 按需使用");
-      $("desktop-reconnect").textContent = "启动桌面";
+      state(t("桌面未启动 · 按需使用"));
+      $("desktop-reconnect").textContent = t("启动桌面");
     } else connect();
   });
   window.addEventListener("finance-session-ready", async () => {
@@ -86,8 +87,8 @@
       if (session === sessionVersion) {
         if ($("conversation-select").value) await connect();
         else {
-          state("桌面未启动 · 按需使用");
-          $("desktop-reconnect").textContent = "启动桌面";
+          state(t("桌面未启动 · 按需使用"));
+          $("desktop-reconnect").textContent = t("启动桌面");
         }
       }
     } catch (e) {
@@ -99,7 +100,7 @@
   const reconnect = $("desktop-reconnect");
   reconnect.onclick = async () => {
     reconnect.disabled = true;
-    reconnect.textContent = "正在连接桌面…";
+    reconnect.textContent = t("正在连接桌面…");
     try {
       await window.financeConnectWorkspace();
       await window.financeEnsureConversation();
@@ -108,13 +109,13 @@
       state(e.message);
     } finally {
       reconnect.disabled = false;
-      reconnect.textContent = "重新连接桌面";
+      reconnect.textContent = t("重新连接桌面");
     }
   };
   $("expand-desktop").onclick = () => {
     const expanded = document
       .querySelector(".workspace")
       .classList.toggle("desktop-expanded");
-    $("expand-desktop").textContent = expanded ? "收起桌面 ↙" : "展开桌面 ↗";
+    $("expand-desktop").textContent = expanded ? t("收起桌面 ↙") : t("展开桌面 ↗");
   };
 })();

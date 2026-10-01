@@ -1,7 +1,8 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=文本编辑器
+Name=Text Editor
+Name[zh_CN]=文本编辑器
 Icon=accessories-text-editor
 Exec=mousepad
 Terminal=false

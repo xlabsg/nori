@@ -1,7 +1,8 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=表格与 CSV
+Name=Spreadsheets & CSV
+Name[zh_CN]=表格与 CSV
 Icon=libreoffice-calc
 Exec=libreoffice --calc
 Terminal=false

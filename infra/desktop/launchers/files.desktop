@@ -1,7 +1,8 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=文件管理器
+Name=File Manager
+Name[zh_CN]=文件管理器
 Icon=system-file-manager
 Exec=thunar /workspace
 Terminal=false

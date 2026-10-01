@@ -19,7 +19,7 @@ done
 dbus-run-session -- startxfce4 >/tmp/desktop-session.log 2>&1 &
 x11vnc -display :99 -forever -shared -nopw -listen 127.0.0.1 -rfbport 5900 -quiet &
 websockify --web=/usr/share/novnc 0.0.0.0:6080 127.0.0.1:5900 &
-chromium --no-sandbox --disable-dev-shm-usage --no-first-run --no-default-browser-check \
+chromium --lang=en-US --no-sandbox --disable-dev-shm-usage --no-first-run --no-default-browser-check \
   --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 \
   --user-data-dir=/workspace/.chromium --window-size=1000,650 --window-position=140,60 \
   file:///opt/desktop/welcome.html >/dev/null 2>&1 &

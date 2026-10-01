@@ -14,11 +14,11 @@ and recurring checks. Finance/crypto tools are optional extensions. The existing
 
 **Local alpha · Apache-2.0 · Python + Pi Agent Core + MCP**
 
-![Nori chat workspace and Linux desktop](docs/assets/workspace.png)
+![Nori chat workspace and Linux desktop](docs/assets/workspace-en.png)
 
 *Actual application UI with an isolated, synthetic conversation. Mail, calendar entries and
 responses in this screenshot are illustrative; no personal accounts are connected.
-The application UI is currently in Chinese.*
+The interface supports English and Simplified Chinese; this preview shows the English UI and desktop.*
 
 ## The workflow
 
@@ -77,7 +77,8 @@ cp .env.example .env
 uv run python scripts/dev.py
 ```
 
-Open **http://127.0.0.1:8767**. The launcher installs missing Pi runtime dependencies,
+Open **http://127.0.0.1:8767**. Use the language selector in the sidebar to switch
+between English and Simplified Chinese; your preference is saved in this browser. The launcher installs missing Pi runtime dependencies,
 initializes the database and starts the API, worker and scheduler. Press Ctrl+C to
 stop them together. If the port is occupied, use `--port 8768`; optional `--data-dir`
 selects an isolated database/config directory. It does not replace a running service.
@@ -94,7 +95,8 @@ Optional desktop setup:
 docker build -t finance-agent-desktop:local infra/desktop
 ```
 
-Click **启动桌面** in a conversation. Building the image does not start a container.
+The image defaults to English (`en_US.UTF-8`), including desktop shortcuts and the
+Chromium welcome page. Click **Start desktop** in a conversation. Building the image does not start a container.
 See [desktop setup](docs/desktop.md) for tools, lifecycle and isolation details.
 
 Google OAuth and Telegram are optional and require your own configuration. See
@@ -103,7 +105,7 @@ Google OAuth and Telegram are optional and require your own configuration. See
 ## Try a synthetic preview
 
 ```sh
-uv run python scripts/demo.py
+uv run python scripts/demo.py --language en
 uv run python scripts/dev.py --port 8768 --data-dir .runtime/demo
 ```
 

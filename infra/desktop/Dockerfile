@@ -11,7 +11,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
     python3 python3-pip python3-venv python3-numpy python3-pandas \
     python3-matplotlib python3-scipy python3-requests \
     git curl wget jq ripgrep unzip zip less procps \
-    ca-certificates fonts-noto-cjk dbus-x11 adwaita-icon-theme \
+    ca-certificates fonts-noto-cjk dbus-x11 adwaita-icon-theme locales \
+    && localedef -i en_US -f UTF-8 en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/*
 COPY --from=browser-tools /usr/local/bin/node /usr/local/bin/node
 COPY --from=browser-tools /opt/browser-tools/ /opt/browser-tools/
@@ -21,6 +22,7 @@ COPY panel.xml /opt/desktop/panel.xml
 RUN chmod 755 /opt/desktop/start.sh \
     && groupadd --gid 1000 finance \
     && useradd --uid 1000 --gid 1000 --home-dir /workspace --shell /bin/bash --no-create-home finance
+ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANGUAGE=en_US:en
 ENV DISPLAY=:99 HOME=/workspace XDG_CONFIG_HOME=/workspace/.config \
     XDG_CACHE_HOME=/workspace/.cache XDG_RUNTIME_DIR=/tmp/runtime-finance
 USER 1000:1000

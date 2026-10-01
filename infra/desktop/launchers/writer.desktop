@@ -1,7 +1,8 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=文档编辑
+Name=Documents
+Name[zh_CN]=文档编辑
 Icon=libreoffice-writer
 Exec=libreoffice --writer
 Terminal=false

@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- English / Simplified Chinese interface with a saved browser language preference.
+- Separate English README preview and a default English Linux desktop image.
+
 ## 0.1.0 — local alpha
 
 - Chat-first workspace with Pi Agent Core, streaming replies and stdio MCP tools.

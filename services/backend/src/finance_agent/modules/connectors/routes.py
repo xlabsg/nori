@@ -52,7 +52,7 @@ def register_connectors(app, chat, tenant_dependency):
         response = HTMLResponse(
             '<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>Google 连接</title><p>'
             + text
-            + '</p><a href="/">返回工作区</a></html>',
+            + '</p><a href="/">返回工作区</a><script src="/assets/i18n.js"></script></html>',
             headers={
                 "Cache-Control": "no-store",
                 "Referrer-Policy": "no-referrer",

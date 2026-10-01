@@ -27,10 +27,32 @@ MESSAGE = """这是用于开源预览的虚构数据，未连接真实邮件或�
 这是静态演示对话，没有读取账号或创建真实后台任务。"""
 
 
+ENGLISH_MESSAGE = """
+Synthetic data for this open-source preview. No real mail or calendar account is connected.
+
+### Today’s work brief
+
+| Source | Example update | Follow-up |
+| --- | --- | --- |
+| Mail | Team meeting materials updated | Read the attachment before the meeting |
+| Mail | Research report published | Review later this week |
+| Calendar | 10:00 team meeting | Prepare the discussion points |
+
+**Work Nori can follow up on**
+
+- Summarize mail and calendar each morning; review results in the reminder inbox.
+- Check for changes within your requested scope and send important updates to Telegram.
+- Remind you before calendar events, or use the Linux desktop when needed.
+
+This is a static preview conversation. No accounts were read or background tasks created."""
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-dir", type=Path, default=ROOT / ".runtime/demo")
+    parser.add_argument("--language", choices=["en", "zh-CN"], default="zh-CN")
     args = parser.parse_args()
+    english = args.language == "en"
     folder = args.data_dir.resolve()
     if folder == (ROOT / ".runtime").resolve():
         parser.error("demo must use an isolated directory")
@@ -45,7 +67,15 @@ def main():
         conn.execute(
             "INSERT INTO conversations (id, tenant_id, title, created_at, updated_at) "
             "VALUES (?, ?, ?, ?, ?)",
-            ("demo-preview", "local", "日常工作简报 · 虚构数据演示", now, now),
+            (
+                "demo-preview",
+                "local",
+                "Daily work brief · Synthetic preview"
+                if english
+                else "日常工作简报 · 虚构数据演示",
+                now,
+                now,
+            ),
         )
         conn.execute(
             "INSERT INTO chat_runs "
@@ -54,8 +84,13 @@ def main():
             ("demo-run", "demo-preview", "demo", "demo", "completed", now),
         )
         for kind, text in [
-            ("user", "我想让你每天汇总邮件和日程，先用虚构数据展示一下工作区。"),
-            ("assistant", MESSAGE),
+            (
+                "user",
+                "I want a daily mail and calendar brief. Show me the workspace with synthetic data."
+                if english
+                else "我想让你每天汇总邮件和日程，先用虚构数据展示一下工作区。",
+            ),
+            ("assistant", ENGLISH_MESSAGE if english else MESSAGE),
         ]:
             conn.execute(
                 "INSERT INTO chat_events "

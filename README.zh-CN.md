@@ -60,7 +60,7 @@ cp .env.example .env
 uv run python scripts/dev.py
 ```
 
-打开 **http://127.0.0.1:8767**。脚本会安装缺失的 Pi 运行时依赖、初始化数据库，
+打开 **http://127.0.0.1:8767**。侧栏语言选项支持 English / 简体中文切换，偏好保存在当前浏览器。脚本会安装缺失的 Pi 运行时依赖、初始化数据库，
 并启动 API、Worker 和 Scheduler；Ctrl+C 一起停止。端口被占用时用 `--port 8768`，
 用 `--data-dir` 可指定独立的数据库和配置目录；脚本不会替换已有服务。
 
@@ -75,6 +75,7 @@ Agent 操作桌面需要视觉模型。不要在聊天、截图或提交记录�
 docker build -t finance-agent-desktop:local infra/desktop
 ```
 
+桌面镜像默认使用英文（`en_US.UTF-8`），包括应用入口和 Chromium 欢迎页。
 在对话右侧点击 **启动桌面**。构建镜像不会启动容器。
 详见 [Linux 桌面](docs/desktop.md)。Google OAuth 和 Telegram 都需要自己的配置，
 见 [Google 接入](docs/google-setup.md) 和 [任务与提醒](docs/proactive-assistant.md)。

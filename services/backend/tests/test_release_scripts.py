@@ -4,18 +4,28 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[3]
 
 
-def test_demo_is_synthetic_and_refuses_existing_database(tmp_path):
-    command = [sys.executable, str(ROOT / "scripts/demo.py"), "--data-dir", str(tmp_path)]
+@pytest.mark.parametrize("language, marker", [("zh-CN", "虚构数据"), ("en", "Synthetic data")])
+def test_demo_is_synthetic_and_refuses_existing_database(tmp_path, language, marker):
+    command = [
+        sys.executable,
+        str(ROOT / "scripts/demo.py"),
+        "--data-dir",
+        str(tmp_path),
+        "--language",
+        language,
+    ]
     result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
     with sqlite3.connect(tmp_path / "finance.db") as conn:
         assert conn.execute("SELECT COUNT(*) FROM tasks").fetchone()[0] == 0
         assert conn.execute("SELECT COUNT(*) FROM conversations").fetchone()[0] == 1
         assert (
-            "虚构数据"
+            marker
             in conn.execute(
                 "SELECT payload_json FROM chat_events WHERE type='assistant'"
             ).fetchone()[0]

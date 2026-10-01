@@ -24,7 +24,9 @@
   </style>
   <div id="status">正在连接 Linux 桌面…</div>
   <div id="screen" tabindex="0"></div>
+  <script src="/assets/i18n.js"></script>
   <script type="module">
+    const t = window.noriI18n.t;
     import RFB from "./core/rfb.js";
     const screen = document.getElementById("screen"),
       status = document.getElementById("status");
@@ -45,7 +47,7 @@
     });
     rfb.addEventListener("disconnect", () => {
       status.hidden = false;
-      status.textContent = "桌面连接已断开，请重新连接。";
+      status.textContent = t("桌面连接已断开，请重新连接。");
       parent.postMessage(
         { type: "finance-desktop-disconnected" },
         location.origin,
@@ -53,7 +55,7 @@
     });
     rfb.addEventListener("securityfailure", () => {
       status.hidden = false;
-      status.textContent = "桌面认证失败，请重新连接。";
+      status.textContent = t("桌面认证失败，请重新连接。");
       parent.postMessage(
         { type: "finance-desktop-disconnected" },
         location.origin,

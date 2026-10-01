@@ -1,8 +1,9 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=浏览器
+Name=Browser
+Name[zh_CN]=浏览器
 Icon=web-browser
-Exec=chromium --no-sandbox --disable-dev-shm-usage --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 --user-data-dir=/workspace/.chromium --no-first-run
+Exec=chromium --lang=en-US --no-sandbox --disable-dev-shm-usage --remote-debugging-address=127.0.0.1 --remote-debugging-port=9222 --user-data-dir=/workspace/.chromium --no-first-run
 Terminal=false
 StartupNotify=true

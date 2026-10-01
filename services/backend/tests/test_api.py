@@ -38,6 +38,15 @@ def test_web_and_health(client):
     assert "javascript" in asset.headers["content-type"]
 
 
+def test_language_script_is_served_before_workspace_scripts(client):
+    page = client.get("/").text
+    assert page.index("/assets/i18n.js") < page.index("/assets/app.js")
+    response = client.get("/assets/i18n.js")
+    assert response.status_code == 200
+    assert "javascript" in response.headers["content-type"]
+    assert "noriI18n" in response.text
+
+
 def test_csv_requires_auth_and_rejects_extra_columns(client):
     body = {
         "csv": "asset_id,quantity,price,extra\nBTC,1,2,x",

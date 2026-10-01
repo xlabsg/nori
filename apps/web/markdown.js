@@ -1,4 +1,5 @@
 (() => {
+  const t = window.noriI18n?.t || ((text) => text);
   const markdown = window.markdownit({ html: false, breaks: true, linkify: false });
   // External Markdown is display content, not executable HTML or automatic remote images.
   markdown.disable("image");
@@ -11,7 +12,7 @@
       : renderer.renderToken(tokens, index, options);
   };
   markdown.renderer.rules.table_open = () =>
-    '<div class="markdown-table" tabindex="0" role="region" aria-label="表格"><table>\n';
+    `<div class="markdown-table" tabindex="0" role="region" aria-label="${t("表格")}"><table>\n`;
   markdown.renderer.rules.table_close = () => "</table></div>\n";
   window.financeRenderMarkdown = (target, text) => {
     target.innerHTML = markdown.render(String(text ?? ""));

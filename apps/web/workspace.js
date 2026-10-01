@@ -1,4 +1,5 @@
 (() => {
+  const t = window.noriI18n?.t || ((text) => text);
   const workspace = document.querySelector(".workspace");
   document.querySelectorAll("[data-dialog]").forEach((button) => {
     button.onclick = () => $(button.dataset.dialog).showModal();
@@ -65,10 +66,10 @@
     };
   });
   window.addEventListener("finance-session-ready", () => {
-    $("session-label").textContent = "本地工作区 · 已连接";
+    $("session-label").textContent = t("本地工作区 · 已连接");
   });
   window.addEventListener("finance-session-reset", () => {
-    $("session-label").textContent = "本地工作区 · 未连接";
+    $("session-label").textContent = t("本地工作区 · 未连接");
     $("conversation-title").textContent = "Nori";
   });
   window.addEventListener("finance-conversation", () => {
