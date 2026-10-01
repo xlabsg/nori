@@ -36,12 +36,20 @@
           <p>连接工作区后显示对话</p>
         </div>
         <div class="sidebar-bottom">
-          <label class="language-picker">语言
-            <select id="language-select" aria-label="语言">
-              <option value="en">English</option>
-              <option value="zh-CN">简体中文</option>
-            </select>
-          </label>
+          <details class="language-picker" id="language-picker">
+            <summary aria-label="语言">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M3 12h18M12 3c5 5 5 13 0 18M12 3c-5 5-5 13 0 18" />
+              </svg>
+              <span id="language-current">English</span>
+              <svg class="language-chevron" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="m3 5 3 3 3-3" /></svg>
+            </summary>
+            <div class="language-menu" role="group" aria-label="语言">
+              <button type="button" data-language="en" lang="en" aria-pressed="false">English</button>
+              <button type="button" data-language="zh-CN" lang="zh-CN" aria-pressed="false">简体中文</button>
+            </div>
+          </details>
           <div class="local-badge">
             <span class="status-dot"></span
             ><span id="session-label">本地工作区 · 未连接</span>

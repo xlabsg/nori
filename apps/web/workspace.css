@@ -1101,16 +1101,71 @@ a:focus-visible {
 #connections-list { margin-top: 18px; }
 
 .language-picker {
+  position: relative;
+  width: fit-content;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.language-picker summary {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 0;
+  list-style: none;
+  cursor: pointer;
+}
+.language-picker summary::-webkit-details-marker {
+  display: none;
+}
+.language-picker summary:hover {
+  color: #42523b;
+}
+.language-chevron {
+  margin-left: 2px;
+  opacity: 0.65;
+}
+.language-picker[open] .language-chevron {
+  transform: rotate(180deg);
+}
+.language-menu {
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 0;
+  z-index: 20;
+  width: 164px;
+  padding: 5px;
+  border: 1px solid #d9dcd1;
+  border-radius: 9px;
+  background: #fafbf7;
+  box-shadow: 0 5px 20px #344b3c12;
+}
+.language-menu button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 14px;
-  color: var(--muted);
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #5f6e5d;
+  font: inherit;
   font-size: 12px;
+  line-height: 18px;
+  cursor: pointer;
 }
-.language-picker select {
-  width: auto;
-  padding: 5px 8px;
-  font-size: 12px;
+.language-menu button:hover {
+  color: #344b3c;
+  background: #edf0e8;
+}
+.language-menu button[aria-pressed="true"]::after {
+  content: "✓";
+  color: #657d65;
+  font-size: 11px;
+}
+.language-picker summary:focus-visible,
+.language-menu button:focus-visible {
+  outline: 2px solid #657d65;
+  outline-offset: 3px;
 }

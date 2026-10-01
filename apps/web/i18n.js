@@ -278,16 +278,32 @@
       }
     });
     document.title = t(document.title);
-    const select = document.getElementById("language-select");
-    if (select) {
-      select.value = language;
-      select.onchange = () => {
-        try { localStorage.setItem("nori-language", select.value); } catch {}
+    const picker = document.getElementById("language-picker");
+    if (picker) {
+      const current = language === "en" ? "English" : "简体中文";
+      document.getElementById("language-current").textContent = current;
+      picker.querySelector("summary").setAttribute("aria-label", t("语言") + " · " + current);
+      document.addEventListener("click", event => {
+        if (!picker.contains(event.target)) picker.open = false;
+      });
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && picker.open) {
+          picker.open = false;
+          picker.querySelector("summary").focus();
+        }
+      });
+    }
+    document.querySelectorAll("[data-language]").forEach(button => {
+      button.setAttribute("aria-pressed", String(button.dataset.language === language));
+      button.onclick = () => {
+        if (picker) picker.open = false;
+        if (button.dataset.language === language) return;
+        try { localStorage.setItem("nori-language", button.dataset.language); } catch {}
         const url = new URL(location.href);
-        url.searchParams.set("lang", select.value);
+        url.searchParams.set("lang", button.dataset.language);
         location.assign(url);
       };
-    }
+    });
   }
   apply();
 })();
